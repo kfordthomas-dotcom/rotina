@@ -43,6 +43,8 @@ const AuthenticatedApp = () => {
 }
 
 function App() {
+  console.log("URL:", import.meta.env.VITE_SUPABASE_URL)
+
   return (
     <QueryClientProvider client={queryClientInstance}>
       <AuthProvider>
