@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F7F7F5;
+  --foreground: #1A1A18;
+  --surface: #FFFFFF;
+  --surface-foreground: #1A1A18;
+  --sidebar: #F0F0EE;
+  --sidebar-foreground: #2D2D2A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A18;
+  --popup: #FFFFFF;
+  --popup-foreground: #1A1A18;
+  --primary: #2C3035;
+  --primary-foreground: #FFFFFF;
+  --secondary: #E8E8E5;
+  --secondary-foreground: #2C3035;
+  --accent: #E2E0D8;
+  --accent-foreground: #1A1A18;
+  --muted: #F0F0EE;
+  --muted-foreground: #6B6B66;
+  --success: #345E45;
+  --success-foreground: #FFFFFF;
+  --error: #8A3333;
+  --error-foreground: #FFFFFF;
+  --warning: #8F6A20;
+  --warning-foreground: #FFFFFF;
+  --info: #305275;
+  --info-foreground: #FFFFFF;
+  --border: #E4E4E0;
+  --font-family-base: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Epilogue', system-ui, -apple-system, sans-serif;
+  --font-family-monospace: 'JetBrains Mono', ui-monospace, monospace;
+  --font-family-cursive: 'Instrument Serif', serif;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+  --shadow: 0 1px 2px rgba(26, 26, 24, 0.04);
+  --shadow-md: 0 4px 12px rgba(26, 26, 24, 0.06), 0 1px 3px rgba(26, 26, 24, 0.04);
+  --shadow-lg: 0 20px 40px rgba(26, 26, 24, 0.12), 0 8px 16px rgba(26, 26, 24, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(44, 48, 53, 0.15);
+  --animation-duration-fast: 150ms;
+  --animation-duration-normal: 250ms;
+  --animation-duration-slow: 400ms;
+  --chart-color-1: #DCE4DD;
+  --chart-color-2: #EAD6D6;
+  --chart-color-3: #D6DEEA;
+  --chart-color-4: #EAE3D6;
+  --chart-color-5: #DFDCE4;
+  --chart-text-1: #233628;
+  --chart-text-2: #422727;
+  --chart-text-3: #253142;
+  --chart-text-4: #423722;
+  --chart-text-5: #2D2836;
+}
+
+.dark {
+  --background: #141413;
+  --foreground: #EAEAE8;
+  --surface: #1C1C1B;
+  --surface-foreground: #EAEAE8;
+  --sidebar: #181817;
+  --sidebar-foreground: #D4D4D2;
+  --card: #1C1C1B;
+  --card-foreground: #EAEAE8;
+  --popup: #242422;
+  --popup-foreground: #EAEAE8;
+  --primary: #EAEAE8;
+  --primary-foreground: #141413;
+  --secondary: #2A2A28;
+  --secondary-foreground: #EAEAE8;
+  --accent: #333330;
+  --accent-foreground: #FFFFFF;
+  --muted: #242422;
+  --muted-foreground: #8F8F8A;
+  --border: #2E2E2C;
+  --chart-color-1: #233628;
+  --chart-color-2: #422727;
+  --chart-color-3: #253142;
+  --chart-color-4: #423722;
+  --chart-color-5: #2D2836;
+  --chart-text-1: #DCE4DD;
+  --chart-text-2: #EAD6D6;
+  --chart-text-3: #D6DEEA;
+  --chart-text-4: #EAE3D6;
+  --chart-text-5: #DFDCE4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family-base);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Tailwind token overrides so shadcn components use Floot design ── */
+:root {
+  --input: var(--border);
+  --ring: var(--primary);
+  --destructive: var(--error);
+  --destructive-foreground: var(--error-foreground);
+  --popover: var(--popup);
+  --popover-foreground: var(--popup-foreground);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted-foreground); }
+
+/* Dialog/Sheet overlay backdrop */
+[data-radix-popper-content-wrapper] {
+  font-family: var(--font-family-base) !important;
+}
+
+/* Calendar grid improvements */
+.rbc-calendar { font-family: var(--font-family-base) !important; }
