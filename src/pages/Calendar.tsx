@@ -215,6 +215,7 @@ export default function Calendar() {
         onOpenChange={(open: boolean) => setTaskDialog({ open, task: open ? taskDialog.task : null })}
         task={taskDialog.task}
         projects={projects}
+        clients={clients}
         onSave={(data: any) => saveTask.mutate({ id: taskDialog.task?.id, data })}
         onDelete={(id: string) => deleteTask.mutate(id)}
       />
