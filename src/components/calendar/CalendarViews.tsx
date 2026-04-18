@@ -15,9 +15,13 @@ export function WeekView({ currentDate, blocks, tasks, projects, onBlockClick, o
   }, []);
 
   return (
-    <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-      <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex' }}>
-        <div style={{ width: '52px', flexShrink: 0, borderRight: '1px solid var(--border)', backgroundColor: 'var(--card)' }}>
+    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+      <div
+        ref={scrollRef}
+        style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', overflowX: 'hidden' }}
+      >
+        {/* Time gutter */}
+        <div style={{ width: '52px', flexShrink: 0, borderRight: '1px solid var(--border)', backgroundColor: 'var(--card)', position: 'relative', zIndex: 1 }}>
           <div style={{ height: '52px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 20, backgroundColor: 'var(--card)' }} />
           <div style={{ position: 'relative', height: `${24 * HOUR_HEIGHT}px` }}>
             {HOURS.map(hour => (
@@ -27,8 +31,10 @@ export function WeekView({ currentDate, blocks, tasks, projects, onBlockClick, o
             ))}
           </div>
         </div>
+
+        {/* Day columns */}
         <div style={{ display: 'flex', flex: 1, minWidth: 0 }}>
-          {days.map(day => (
+          {days.map((day, i) => (
             <DayColumn
               key={day.toISOString()}
               date={day}
@@ -40,6 +46,7 @@ export function WeekView({ currentDate, blocks, tasks, projects, onBlockClick, o
               onDragStart={onDragStart}
               onResizeStart={onResizeStart}
               onTaskDrop={onTaskDrop}
+              isLast={i === days.length - 1}
             />
           ))}
         </div>
@@ -57,9 +64,13 @@ export function DayView({ currentDate, blocks, tasks, projects, onBlockClick, on
   }, []);
 
   return (
-    <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-      <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex' }}>
-        <div style={{ width: '52px', flexShrink: 0, borderRight: '1px solid var(--border)', backgroundColor: 'var(--card)' }}>
+    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+      <div
+        ref={scrollRef}
+        style={{ flex: 1, minHeight: 0, overflowY: 'auto', display: 'flex', overflowX: 'hidden' }}
+      >
+        {/* Time gutter */}
+        <div style={{ width: '52px', flexShrink: 0, borderRight: '1px solid var(--border)', backgroundColor: 'var(--card)', position: 'relative', zIndex: 1 }}>
           <div style={{ height: '52px', borderBottom: '1px solid var(--border)', position: 'sticky', top: 0, zIndex: 20, backgroundColor: 'var(--card)' }} />
           <div style={{ position: 'relative', height: `${24 * HOUR_HEIGHT}px` }}>
             {HOURS.map(hour => (
@@ -69,7 +80,9 @@ export function DayView({ currentDate, blocks, tasks, projects, onBlockClick, on
             ))}
           </div>
         </div>
-        <div style={{ display: 'flex', flex: 1 }}>
+
+        {/* Single day column */}
+        <div style={{ display: 'flex', flex: 1, minWidth: 0 }}>
           <DayColumn
             date={currentDate}
             blocks={dayBlocks}
@@ -80,6 +93,7 @@ export function DayView({ currentDate, blocks, tasks, projects, onBlockClick, on
             onDragStart={onDragStart}
             onResizeStart={onResizeStart}
             onTaskDrop={onTaskDrop}
+            isLast={true}
           />
         </div>
       </div>
@@ -93,21 +107,36 @@ export function MonthView({ currentDate, blocks, tasks, projects, onBlockClick, 
 
   return (
     <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '1rem' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', backgroundColor: 'var(--border)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(7, 1fr)',
+        border: '1px solid var(--border)',
+        borderRadius: 'var(--radius-lg)',
+        overflow: 'hidden',
+      }}>
         {weekDays.map(day => (
-          <div key={day} style={{ backgroundColor: 'var(--card)', padding: '0.5rem', textAlign: 'center' }}>
+          <div key={day} style={{ backgroundColor: 'var(--card)', padding: '0.5rem', textAlign: 'center', borderBottom: '1px solid var(--border)', borderRight: '1px solid var(--border)' }}>
             <span style={{ fontSize: '0.625rem', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 500, color: 'var(--muted-foreground)' }}>{day}</span>
           </div>
         ))}
-        {days.map(day => {
+        {days.map((day, idx) => {
           const dateStr = format(day, 'yyyy-MM-dd');
           const dayBlocks = (blocks as any[]).filter((b: any) => b.date === dateStr);
           const inMonth = isSameMonth(day, currentDate);
           const today = isToday(day);
+          const isLastInRow = (idx + 1) % 7 === 0;
           return (
             <div
               key={day.toISOString()}
-              style={{ backgroundColor: 'var(--card)', minHeight: '100px', padding: '0.375rem', opacity: inMonth ? 1 : 0.4, cursor: 'pointer' }}
+              style={{
+                backgroundColor: 'var(--card)',
+                minHeight: '100px',
+                padding: '0.375rem',
+                opacity: inMonth ? 1 : 0.4,
+                cursor: 'pointer',
+                borderBottom: '1px solid var(--border)',
+                borderRight: isLastInRow ? 'none' : '1px solid var(--border)',
+              }}
               onClick={() => onSlotClick?.(day, 9)}
               onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }}
               onDrop={(e) => { e.preventDefault(); const taskId = e.dataTransfer.getData('taskId'); if (taskId && onTaskDrop) onTaskDrop(taskId, day, 9); }}

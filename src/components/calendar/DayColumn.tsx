@@ -5,7 +5,7 @@ import TimeBlockItem from './TimeBlockItem';
 const HOUR_HEIGHT = 56;
 const HOURS = Array.from({ length: 24 }, (_, i) => i);
 
-export default function DayColumn({ date, blocks, tasks, projects, onBlockClick, onSlotClick, onDragStart, onResizeStart, onTaskDrop }: any) {
+export default function DayColumn({ date, blocks, tasks, projects, onBlockClick, onSlotClick, onDragStart, onResizeStart, onTaskDrop, isLast }: any) {
   const today = isToday(date);
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +28,7 @@ export default function DayColumn({ date, blocks, tasks, projects, onBlockClick,
   };
 
   return (
-    <div style={{ flex: 1, minWidth: 0, borderRight: '1px solid var(--border)', position: 'relative' }}>
+    <div style={{ flex: 1, minWidth: 0, borderRight: isLast ? 'none' : '1px solid var(--border)', position: 'relative' }}>
       <div style={{
         position: 'sticky', top: 0, zIndex: 20, textAlign: 'center',
         padding: '0.5rem 0', borderBottom: '1px solid var(--border)',
